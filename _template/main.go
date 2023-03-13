@@ -21,6 +21,13 @@ func init() {
 func main() {
 }
 
+func init() {
+	buf := make([]byte, 10*1024)
+	sc.Buffer(buf, math.MaxInt32)
+
+	sc.Split(bufio.ScanWords)
+}
+
 func scan() int {
 	sc.Scan()
 	i, err := strconv.Atoi(sc.Text())
@@ -46,7 +53,7 @@ func printSliceSepSpace(nums []int) {
 
 type Queue struct{ v []int }
 
-func NewQueue(n int) *Queue    { return &Queue{v: make([]int, n)} }
+func NewQueue() *Queue         { return &Queue{} }
 func (q *Queue) isEmpty() bool { return len(q.v) == 0 }
 func (q *Queue) len() int      { return len(q.v) }
 func (q *Queue) push(i int)    { q.v = append(q.v, i) }
@@ -58,7 +65,7 @@ func (q *Queue) pop() int {
 
 type Stack struct{ v []int }
 
-func NewStack(n int) *Stack    { return &Stack{v: make([]int, n)} }
+func NewStack(n int) *Stack    { return &Stack{} }
 func (s *Stack) isEmpty() bool { return len(s.v) == 0 }
 func (s *Stack) len() int      { return len(s.v) }
 func (s *Stack) push(i int)    { s.v = append(s.v, i) }
@@ -66,4 +73,22 @@ func (s *Stack) pop() int {
 	v := s.v[len(s.v)-1]
 	s.v = s.v[:len(s.v)]
 	return v
+}
+
+func each_combination(n int, k int, f func([]int)) {
+	indexes := make([]int, k)
+	recursive_combination(indexes, n-1, k, f)
+}
+
+func recursive_combination(indexes []int, s int, rest int, f func([]int)) {
+	if rest == 0 {
+		f(indexes)
+	} else {
+		if s < 0 {
+			return
+		}
+		recursive_combination(indexes, s-1, rest, f)
+		indexes[rest-1] = s
+		recursive_combination(indexes, s-1, rest-1, f)
+	}
 }
