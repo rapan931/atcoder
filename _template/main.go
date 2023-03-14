@@ -92,3 +92,45 @@ func recursive_combination(indexes []int, s int, rest int, f func([]int)) {
 		recursive_combination(indexes, s-1, rest-1, f)
 	}
 }
+
+func each_permutation(n int, r int) {
+	if n == r {
+		nums := make([]int, n)
+		for i := 0; i < n; i++ {
+			nums[i] = i
+		}
+		recursive_permutation(len(nums), nums, func(indexes []int) {
+			fmt.Println(indexes)
+		})
+	} else {
+		each_combination(n, r, func(indexes []int) {
+			recursive_permutation(len(indexes), indexes, func(indexes2 []int) {
+				fmt.Println(indexes2)
+			})
+		})
+	}
+
+}
+
+func recursive_permutation(n int, pat []int, f func([]int)) {
+	if n == 1 {
+		f(pat)
+	} else {
+		for i := 0; i < n; i++ {
+			recursive_permutation(n-1, pat, f)
+			if n%2 == 0 {
+				pat[i], pat[n-1] = pat[n-1], pat[i]
+			} else {
+				pat[0], pat[n-1] = pat[n-1], pat[0]
+			}
+		}
+	}
+}
+
+func factorialNum(n int) int {
+	ret := 1
+	for i := 2; i <= n; i++ {
+		ret *= i
+	}
+	return ret
+}
