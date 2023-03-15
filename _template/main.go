@@ -65,13 +65,13 @@ func (q *Queue) pop() int {
 
 type Stack struct{ v []int }
 
-func NewStack(n int) *Stack    { return &Stack{} }
+func NewStack() *Stack         { return &Stack{} }
 func (s *Stack) isEmpty() bool { return len(s.v) == 0 }
 func (s *Stack) len() int      { return len(s.v) }
 func (s *Stack) push(i int)    { s.v = append(s.v, i) }
 func (s *Stack) pop() int {
 	v := s.v[len(s.v)-1]
-	s.v = s.v[:len(s.v)]
+	s.v = s.v[:len(s.v)-1]
 	return v
 }
 
