@@ -134,3 +134,7 @@ func factorialNum(n int) int {
 	}
 	return ret
 }
+
+func powInt64(x, y uint64) uint64 {
+	return uint64(math.Pow(float64(x), float64(y)))
+}
