@@ -54,6 +54,7 @@ func printSliceSepSpace(nums []int) {
 type Queue struct{ v []int }
 
 func NewQueue() *Queue         { return &Queue{} }
+func (q *Queue) first() int    { return q.v[0] }
 func (q *Queue) isEmpty() bool { return len(q.v) == 0 }
 func (q *Queue) len() int      { return len(q.v) }
 func (q *Queue) push(i int)    { q.v = append(q.v, i) }
@@ -66,6 +67,7 @@ func (q *Queue) pop() int {
 type Stack struct{ v []int }
 
 func NewStack() *Stack         { return &Stack{} }
+func (s *Stack) first() int    { return s.v[0] }
 func (s *Stack) isEmpty() bool { return len(s.v) == 0 }
 func (s *Stack) len() int      { return len(s.v) }
 func (s *Stack) push(i int)    { s.v = append(s.v, i) }
