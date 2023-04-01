@@ -37,6 +37,18 @@ func scan() int {
 	return i
 }
 
+func scan2() (int, int) {
+	return scan(), scan()
+}
+
+func scan3() (int, int, int) {
+	return scan(), scan(), scan()
+}
+
+func scan4() (int, int, int, int) {
+	return scan(), scan(), scan(), scan()
+}
+
 func scans() string {
 	sc.Scan()
 	return sc.Text()
