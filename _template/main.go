@@ -1,4 +1,4 @@
-package main
+poackage main
 
 import (
 	"bufio"
@@ -47,6 +47,10 @@ func scan3() (int, int, int) {
 
 func scan4() (int, int, int, int) {
 	return scan(), scan(), scan(), scan()
+}
+
+func scanf() float64 {
+	return float64(scan())
 }
 
 func scans() string {
