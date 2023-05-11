@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -19,6 +20,40 @@ func init() {
 }
 
 func main() {
+	_, Q := scan2()
+
+	boxes := map[int][]int{}
+	numbers := map[int][]int{}
+
+	for i := 0; i < Q; i++ {
+		switch scan() {
+		case 1:
+			i, j := scan2()
+			boxes[j] = append(boxes[j], i)
+
+			if !contains(numbers[i], j) {
+				numbers[i] = append(numbers[i], j)
+			}
+		case 2:
+			i := scan()
+			sort.Ints(boxes[i])
+			printSliceSepSpaceLn(boxes[i])
+		case 3:
+			value := scan()
+			if len(numbers[value]) > 0 {
+				sort.Ints(numbers[value])
+				printSliceSepSpaceLn(numbers[value])
+			}
+		}
+	}
+}
+
+func repeatSlice(rep int, v int) []int {
+	s := make([]int, rep)
+	for i := range s {
+		s[i] = v
+	}
+	return s
 }
 
 func init() {
@@ -64,6 +99,10 @@ func scanb() []byte {
 }
 
 func printSliceSepSpace(nums []int) {
+	fmt.Print(strings.Trim(fmt.Sprint(nums), "[]"))
+}
+
+func printSliceSepSpaceLn(nums []int) {
 	fmt.Println(strings.Trim(fmt.Sprint(nums), "[]"))
 }
 
@@ -155,14 +194,6 @@ func factorialNum(n int) int {
 
 func powInt64(x, y uint64) uint64 {
 	return uint64(math.Pow(float64(x), float64(y)))
-}
-
-func repeatSlice(rep int, v int) []int {
-	s := make([]int, rep)
-	for i := range s {
-		s[i] = v
-	}
-	return s
 }
 
 func contains(list []int, v int) bool {

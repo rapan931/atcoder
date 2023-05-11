@@ -19,6 +19,23 @@ func init() {
 }
 
 func main() {
+	scan()
+	S := scanb()
+
+	countO := 0
+	for _, v := range S {
+		if v == 'x' {
+			fmt.Println("No")
+			return
+		} else if v == 'o' {
+			countO++
+		}
+	}
+	if countO >= 1 {
+		fmt.Println("Yes")
+	} else {
+		fmt.Println("No")
+	}
 }
 
 func init() {
@@ -47,10 +64,6 @@ func scan3() (int, int, int) {
 
 func scan4() (int, int, int, int) {
 	return scan(), scan(), scan(), scan()
-}
-
-func scanf() float64 {
-	return float64(scan())
 }
 
 func scans() string {
@@ -155,21 +168,4 @@ func factorialNum(n int) int {
 
 func powInt64(x, y uint64) uint64 {
 	return uint64(math.Pow(float64(x), float64(y)))
-}
-
-func repeatSlice(rep int, v int) []int {
-	s := make([]int, rep)
-	for i := range s {
-		s[i] = v
-	}
-	return s
-}
-
-func contains(list []int, v int) bool {
-    for _, s := range list {
-        if v == s {
-            return true
-        }
-    }
-    return false
 }
