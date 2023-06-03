@@ -19,6 +19,28 @@ func init() {
 }
 
 func main() {
+	// SEE: https://atcoder.jp/contests/abc299/submissions/40901013
+	var N = scan()
+	var S = scanb()
+
+	cnt := 0
+	ans := 0
+
+	for i := 0; i < N; i++ {
+		if S[i] == '|' {
+			cnt++
+		}
+
+		if S[i] == '*' {
+			ans = cnt
+		}
+	}
+
+	if ans == 1 {
+		fmt.Println("in")
+	} else {
+		fmt.Println("out")
+	}
 }
 
 func init() {
@@ -26,20 +48,6 @@ func init() {
 	sc.Buffer(buf, math.MaxInt32)
 
 	sc.Split(bufio.ScanWords)
-}
-
-func max(a int, b int) int {
-	if b > a {
-		return b
-	}
-	return a
-}
-
-func min(a int, b int) int {
-	if b < a {
-		return b
-	}
-	return a
 }
 
 func scan() int {
@@ -180,10 +188,10 @@ func repeatSlice(rep int, v int) []int {
 }
 
 func contains(list []int, v int) bool {
-    for _, s := range list {
-        if v == s {
-            return true
-        }
-    }
-    return false
+	for _, s := range list {
+		if v == s {
+			return true
+		}
+	}
+	return false
 }

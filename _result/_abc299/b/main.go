@@ -19,6 +19,35 @@ func init() {
 }
 
 func main() {
+	N, T := scan2()
+	C := make([]int, N)
+
+	key := 0
+	for i := 0; i < N; i++ {
+		C[i] = scan()
+		if T == C[i] {
+			key = T
+		}
+	}
+
+	if key == 0 {
+		key = C[0]
+	}
+
+	max := 0
+	maxIndex := 0
+
+	for i := 0; i < N; i++ {
+		R := scan()
+		if C[i] == key {
+			if max < R {
+				maxIndex = i + 1
+				max = R
+			}
+		}
+	}
+
+	fmt.Println(maxIndex)
 }
 
 func init() {
@@ -26,20 +55,6 @@ func init() {
 	sc.Buffer(buf, math.MaxInt32)
 
 	sc.Split(bufio.ScanWords)
-}
-
-func max(a int, b int) int {
-	if b > a {
-		return b
-	}
-	return a
-}
-
-func min(a int, b int) int {
-	if b < a {
-		return b
-	}
-	return a
 }
 
 func scan() int {
@@ -180,10 +195,10 @@ func repeatSlice(rep int, v int) []int {
 }
 
 func contains(list []int, v int) bool {
-    for _, s := range list {
-        if v == s {
-            return true
-        }
-    }
-    return false
+	for _, s := range list {
+		if v == s {
+			return true
+		}
+	}
+	return false
 }
