@@ -21,13 +21,6 @@ func init() {
 func main() {
 }
 
-func init() {
-	buf := make([]byte, 10*1024)
-	sc.Buffer(buf, math.MaxInt32)
-
-	sc.Split(bufio.ScanWords)
-}
-
 func max(a int, b int) int {
 	if b > a {
 		return b
