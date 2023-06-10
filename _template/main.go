@@ -173,10 +173,10 @@ func repeatSlice(rep int, v int) []int {
 }
 
 func contains(list []int, v int) bool {
-    for _, s := range list {
-        if v == s {
-            return true
-        }
-    }
-    return false
+	for _, s := range list {
+		if v == s {
+			return true
+		}
+	}
+	return false
 }
