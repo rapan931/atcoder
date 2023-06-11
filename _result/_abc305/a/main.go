@@ -19,6 +19,15 @@ func init() {
 }
 
 func main() {
+	N := scan()
+
+	d := N % 5
+
+	if d <= 2 {
+		fmt.Println(N / 5 * 5)
+	} else {
+		fmt.Println(N/5*5 + 5)
+	}
 }
 
 func max(a int, b int) int {
@@ -35,7 +44,7 @@ func min(a int, b int) int {
 	return a
 }
 
-func scanI() int {
+func scan() int {
 	sc.Scan()
 	i, err := strconv.Atoi(sc.Text())
 	if err != nil {
@@ -44,37 +53,28 @@ func scanI() int {
 	return i
 }
 
-func scanIs(n int) []int {
-	l := make([]int, n)
-	for i := 0; i < n; i++ {
-		l = append(l, scanI())
-	}
-
-	return l
+func scan2() (int, int) {
+	return scan(), scan()
 }
 
-func scanI2() (int, int) {
-	return scanI(), scanI()
+func scan3() (int, int, int) {
+	return scan(), scan(), scan()
 }
 
-func scanI3() (int, int, int) {
-	return scanI(), scanI(), scanI()
+func scan4() (int, int, int, int) {
+	return scan(), scan(), scan(), scan()
 }
 
-func scanI4() (int, int, int, int) {
-	return scanI(), scanI(), scanI(), scanI()
+func scanf() float64 {
+	return float64(scan())
 }
 
-func scanF() float64 {
-	return float64(scanI())
-}
-
-func scanS() string {
+func scans() string {
 	sc.Scan()
 	return sc.Text()
 }
 
-func scanB() []byte {
+func scanb() []byte {
 	sc.Scan()
 	return sc.Bytes()
 }

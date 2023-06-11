@@ -12,13 +12,98 @@ import (
 var sc = bufio.NewScanner(os.Stdin)
 
 func init() {
-	buf := make([]byte, 10*1024)
+	buf := make([]byte, 1000*1024)
 	sc.Buffer(buf, math.MaxInt32)
 
 	sc.Split(bufio.ScanWords)
 }
 
 func main() {
+	H, W := scan2()
+	m := make([][]byte, H)
+
+	for i := 0; i < H; i++ {
+		m[i] = scanb()
+	}
+
+	// 左上、右上、左下、右下
+	var a = []int{}
+	var b = []int{}
+	var c = []int{}
+	var d = []int{}
+
+	for i := 0; i < H; i++ {
+		for ii := 0; ii < W; ii++ {
+			if m[i][ii] == '#' {
+				a = append(a, i, ii)
+				break
+			}
+		}
+		if len(a) != 0 {
+			break
+		}
+	}
+
+	for i := 0; i < H; i++ {
+		for ii := W - 1; 0 <= ii; ii-- {
+			if m[i][ii] == '#' {
+				b = append(b, i, ii)
+				break
+			}
+		}
+		if len(b) != 0 {
+			break
+		}
+	}
+
+	for i := H - 1; 0 <= i; i-- {
+		for ii := 0; ii < W; ii++ {
+			if m[i][ii] == '#' {
+				c = append(c, i, ii)
+				break
+			}
+		}
+		if len(c) != 0 {
+			break
+		}
+	}
+
+	for i := H - 1; 0 <= i; i-- {
+		for ii := W - 1; 0 <= ii; ii-- {
+			if m[i][ii] == '#' {
+				d = append(d, i, ii)
+				break
+			}
+		}
+		if len(d) != 0 {
+			break
+		}
+	}
+
+	if a[1] != c[1] {
+		if a[1] < c[1] {
+			c[1] = a[1]
+		} else {
+			a[1] = c[1]
+		}
+	}
+
+	if b[1] != d[1] {
+		if b[1] < d[1] {
+			b[1] = d[1]
+		} else {
+			d[1] = b[1]
+		}
+	}
+
+	for i := a[0]; i < c[0]+1; i++ {
+		for ii := a[1]; ii < b[1]+1; ii++ {
+			if m[i][ii] == '.' {
+				printSliceSepSpace([]int{i + 1, ii + 1})
+			}
+		}
+
+	}
 }
 
 func max(a int, b int) int {
@@ -35,7 +120,7 @@ func min(a int, b int) int {
 	return a
 }
 
-func scanI() int {
+func scan() int {
 	sc.Scan()
 	i, err := strconv.Atoi(sc.Text())
 	if err != nil {
@@ -44,37 +129,28 @@ func scanI() int {
 	return i
 }
 
-func scanIs(n int) []int {
-	l := make([]int, n)
-	for i := 0; i < n; i++ {
-		l = append(l, scanI())
-	}
-
-	return l
+func scan2() (int, int) {
+	return scan(), scan()
 }
 
-func scanI2() (int, int) {
-	return scanI(), scanI()
+func scan3() (int, int, int) {
+	return scan(), scan(), scan()
 }
 
-func scanI3() (int, int, int) {
-	return scanI(), scanI(), scanI()
+func scan4() (int, int, int, int) {
+	return scan(), scan(), scan(), scan()
 }
 
-func scanI4() (int, int, int, int) {
-	return scanI(), scanI(), scanI(), scanI()
+func scanf() float64 {
+	return float64(scan())
 }
 
-func scanF() float64 {
-	return float64(scanI())
-}
-
-func scanS() string {
+func scans() string {
 	sc.Scan()
 	return sc.Text()
 }
 
-func scanB() []byte {
+func scanb() []byte {
 	sc.Scan()
 	return sc.Bytes()
 }
