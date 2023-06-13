@@ -75,8 +75,15 @@ func scanS() string {
 }
 
 func scanB() []byte {
-	sc.Scan()
-	return sc.Bytes()
+	return []byte(scanS())
+}
+
+func scanByteGrid(h int) [][]byte {
+	g := make([][]byte, h)
+	for i := 0; i < h; i++ {
+		g[i] = scanB()
+	}
+	return g
 }
 
 func printSliceSepSpace(nums []int) {
@@ -188,4 +195,121 @@ func contains(list []int, v int) bool {
 		}
 	}
 	return false
+}
+
+// SEE: https://zenn.dev/johniel/articles/f1028e37f91489
+// SEE: https://rtoch.com/posts/golang-segment-tree/
+type SegmentTree struct {
+	data []int
+	n    int
+	t    SegmentTreeType
+}
+
+const (
+	SEGMENT_MAX = 100000000
+	SEGMENT_MIN = -100000000
+)
+
+type SegmentTreeType int
+
+const (
+	SegmentTreeTypeSum SegmentTreeType = iota
+	SegmentTreeTypeMin
+	SegmentTreeTypeMax
+)
+
+func newSegmentTree(n int, data []int, t SegmentTreeType) *SegmentTree {
+	segTree := new(SegmentTree)
+	segTree.n = 1
+	for segTree.n < n {
+		segTree.n *= 2
+	}
+
+	segTree.data = make([]int, segTree.n*2-1)
+	segTree.t = t
+	switch t {
+	case SegmentTreeTypeMin:
+		for i := 0; i < segTree.n*2-1; i++ {
+			segTree.data[i] = SEGMENT_MAX
+		}
+	case SegmentTreeTypeMax:
+		for i := 0; i < segTree.n*2-1; i++ {
+			segTree.data[i] = SEGMENT_MIN
+		}
+	}
+
+	return segTree
+}
+
+// ある頂点の表す区間が [a, b) であるならその子の表す区間はそれぞれ、
+// [a, (a+b)/2) と [(a+b)/2, b) です。
+//
+// * [a, b) は a以上b未満の区間(bは含まない区間)を表す
+func (segTree *SegmentTree) query(begin, end, idx, a, b int) int {
+	if b <= begin || end <= a {
+		// クエリと関係のない区間
+		switch segTree.t {
+		case SegmentTreeTypeSum:
+			return 0
+		case SegmentTreeTypeMin:
+			return SEGMENT_MAX
+		case SegmentTreeTypeMax:
+			return SEGMENT_MIN
+		default:
+			// ありえない
+			return 0
+		}
+	}
+
+	if begin <= a && b <= end {
+		// 全体がクエリの対象になる区間
+		return segTree.data[idx]
+	}
+
+	// 一部がクエリの対象にならない場合は子に尋ねる
+	v1 := segTree.query(begin, end, idx*2+1, a, (a+b)/2)
+	v2 := segTree.query(begin, end, idx*2+2, (a+b)/2, b)
+
+	switch segTree.t {
+	case SegmentTreeTypeSum:
+		return v1 + v2
+	case SegmentTreeTypeMin:
+		return min(v1, v2)
+	case SegmentTreeTypeMax:
+		return max(v1, v2)
+	default:
+		// ありえない
+		return 0
+	}
+}
+
+func (segTree *SegmentTree) Query(begin, end int) int {
+	return segTree.query(begin, end, 0, 0, segTree.n)
+}
+
+// idx += segTree.n - 1 は、末端の葉を探している。
+// +---------------+
+// |       0       |
+// +-------+-------+
+// |   1   |   2   |
+// +---+---+-------+
+// | 3 | 4 | 5 | 6 |
+// +-+-+---+-+-+-+-+
+// |7|8|9|A|B|C|D|E|
+// +-+-+-+-+-+-+-+-+
+func (segTree *SegmentTree) Update(idx, x int) {
+	idx += segTree.n - 1
+	segTree.data[idx] = x
+	for 0 < idx {
+		idx = (idx - 1) / 2
+
+		switch segTree.t {
+		case SegmentTreeTypeSum:
+			segTree.data[idx] = segTree.data[idx*2+1] + segTree.data[idx*2+2]
+		case SegmentTreeTypeMin:
+			segTree.data[idx] = min(segTree.data[idx*2+1], segTree.data[idx*2+2])
+		case SegmentTreeTypeMax:
+			segTree.data[idx] = max(segTree.data[idx*2+1], segTree.data[idx*2+2])
+		}
+	}
 }
