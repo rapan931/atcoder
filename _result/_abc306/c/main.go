@@ -19,6 +19,23 @@ func init() {
 }
 
 func main() {
+	N := scanI()
+	A := scanIs(3 *N)
+
+	m := make(map[int]int, N)
+	for i := 0; i < N; i++ {
+		m[i] = 0
+	}
+	
+	ret := make([]int, 0, N)
+
+	for i := 0; i < 3 * N; i++ {
+		m[A[i]] = m[A[i]] + 1
+		if m[A[i]] == 2 {
+			ret = append(ret, A[i])
+		}
+	}
+	printSliceSepSpace(ret)
 }
 
 func max(a int, b int) int {
@@ -45,12 +62,12 @@ func scanI() int {
 }
 
 func scanIs(n int) []int {
-	l := make([]int, n)
+	ret := make([]int, n)
 	for i := 0; i < n; i++ {
-		l[i] = scanI()
+		ret[i] = scanI()
 	}
 
-	return l
+	return ret
 }
 
 func scanI2() (int, int) {
@@ -313,12 +330,3 @@ func (segTree *SegmentTree) Update(idx, x int) {
 		}
 	}
 }
-
-func binStrToInt(str string) uint64 {
-	v, error := strconv.ParseUint(str, 2, 64)
-	if error != nil {
-		panic("")
-	}
-	return v
-}
-

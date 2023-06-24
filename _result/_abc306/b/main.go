@@ -19,6 +19,23 @@ func init() {
 }
 
 func main() {
+	N := 64
+	A := make([]string, N)
+	for i := 64; i > 0; i-- {
+		A[i - 1] = scanS()
+	}
+
+	v, _ := strconv.ParseUint(strings.Join(A, ""), 2, 64)
+	fmt.Println(v)
+}
+
+func binStrToInt(str string) uint64 {
+
+	v, error := strconv.ParseUint(str, 2, 64)
+	if error != nil {
+		panic("")
+	}
+	return v
 }
 
 func max(a int, b int) int {
@@ -47,7 +64,7 @@ func scanI() int {
 func scanIs(n int) []int {
 	l := make([]int, n)
 	for i := 0; i < n; i++ {
-		l[i] = scanI()
+		l = append(l, scanI())
 	}
 
 	return l
@@ -313,12 +330,3 @@ func (segTree *SegmentTree) Update(idx, x int) {
 		}
 	}
 }
-
-func binStrToInt(str string) uint64 {
-	v, error := strconv.ParseUint(str, 2, 64)
-	if error != nil {
-		panic("")
-	}
-	return v
-}
-

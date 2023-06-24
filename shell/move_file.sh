@@ -13,4 +13,4 @@ mv -i main.go _result/_$dir/$q
 #git add _result/_$dir/$q/$sendfile
 #git commit -m "$dir $q"
 
-cp -i _template/main.go ./main.go
+# cp -i _template/main.go ./main.go
