@@ -19,6 +19,51 @@ func init() {
 }
 
 func main() {
+	H, W := sI2()
+	G := sGrid(H, W)
+	Q := sI()
+
+	A := make([]int, Q)
+	B := make([]int, Q)
+	C := make([]int, Q)
+	D := make([]int, Q)
+
+	for i := 0; i < Q; i++ {
+		A[i], B[i], C[i], D[i] = sI4()
+	}
+
+	sums := make([][]int, H+1)
+	for i := 0; i < H+1; i++ {
+		sums[i] = make([]int, W+1)
+	}
+
+	// 横方向の累積和
+	for i := 1; i < H+1; i++ {
+		for ii := 1; ii < W+1; ii++ {
+			if ii == 1 {
+				sums[i][ii] = G[i-1][ii-1]
+			} else {
+				sums[i][ii] = sums[i][ii-1] + G[i-1][ii-1]
+			}
+		}
+	}
+
+	// 縦方向の累積和
+	for i := 1; i < W+1; i++ {
+		for ii := 1; ii < H+1; ii++ {
+			// if ii == 0 {
+			// 	sums[ii][i] = sums[ii][i]
+			// } else {
+			// 	sums[ii][i] = sums[ii-1][i] + sums[ii][i]
+			// }
+			if ii != 1 {
+				sums[ii][i] = sums[ii-1][i] + sums[ii][i]
+			}
+		}
+	}
+	for i := 0; i < Q; i++ {
+		fmt.Println(sums[C[i]][D[i]] + sums[A[i]-1][B[i]-1] - sums[A[i]-1][D[i]] - sums[C[i]][B[i]-1])
+	}
 }
 
 func max(a int, b int) int {
@@ -329,4 +374,3 @@ func binStrToInt(str string) uint64 {
 	}
 	return v
 }
-

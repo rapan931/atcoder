@@ -19,6 +19,20 @@ func init() {
 }
 
 func main() {
+	D, N := sI2()
+	sums := make([]int, D + 2)
+
+	for i := 0; i < N; i++ {
+		L, R := sI2()
+		sums[L] += 1
+		sums[R+ 1] += -1
+	}
+
+	sum  := 0
+	for i := 1; i < D + 1; i++ {
+		sum += sums[i]
+		fmt.Println(sum)
+	}
 }
 
 func max(a int, b int) int {
@@ -78,15 +92,7 @@ func sB() []byte {
 	return []byte(sS())
 }
 
-func sGrid(h, w int) [][]int {
-	g := make([][]int, h)
-	for i := 0; i < h; i++ {
-		g[i] = sIs(w)
-	}
-	return g
-}
-
-func sByteGrid(h int) [][]byte {
+func scanByteGrid(h int) [][]byte {
 	g := make([][]byte, h)
 	for i := 0; i < h; i++ {
 		g[i] = sB()

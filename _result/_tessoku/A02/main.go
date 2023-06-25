@@ -19,6 +19,15 @@ func init() {
 }
 
 func main() {
+	N, X := scanI2()
+	A := scanIs(N)
+	for i := 0; i < N; i++ {
+		if A[i] == X {
+			fmt.Println("Yes")
+			return
+		}
+	}
+	fmt.Println("No")
 }
 
 func max(a int, b int) int {
@@ -35,7 +44,7 @@ func min(a int, b int) int {
 	return a
 }
 
-func sI() int {
+func scanI() int {
 	sc.Scan()
 	i, err := strconv.Atoi(sc.Text())
 	if err != nil {
@@ -44,52 +53,44 @@ func sI() int {
 	return i
 }
 
-func sIs(n int) []int {
+func scanIs(n int) []int {
 	l := make([]int, n)
 	for i := 0; i < n; i++ {
-		l[i] = sI()
+		l[i] = scanI()
 	}
 
 	return l
 }
 
-func sI2() (int, int) {
-	return sI(), sI()
+func scanI2() (int, int) {
+	return scanI(), scanI()
 }
 
-func sI3() (int, int, int) {
-	return sI(), sI(), sI()
+func scanI3() (int, int, int) {
+	return scanI(), scanI(), scanI()
 }
 
-func sI4() (int, int, int, int) {
-	return sI(), sI(), sI(), sI()
+func scanI4() (int, int, int, int) {
+	return scanI(), scanI(), scanI(), scanI()
 }
 
-func sF() float64 {
-	return float64(sI())
+func scanF() float64 {
+	return float64(scanI())
 }
 
-func sS() string {
+func scanS() string {
 	sc.Scan()
 	return sc.Text()
 }
 
-func sB() []byte {
-	return []byte(sS())
+func scanB() []byte {
+	return []byte(scanS())
 }
 
-func sGrid(h, w int) [][]int {
-	g := make([][]int, h)
-	for i := 0; i < h; i++ {
-		g[i] = sIs(w)
-	}
-	return g
-}
-
-func sByteGrid(h int) [][]byte {
+func scanByteGrid(h int) [][]byte {
 	g := make([][]byte, h)
 	for i := 0; i < h; i++ {
-		g[i] = sB()
+		g[i] = scanB()
 	}
 	return g
 }
@@ -329,4 +330,3 @@ func binStrToInt(str string) uint64 {
 	}
 	return v
 }
-
