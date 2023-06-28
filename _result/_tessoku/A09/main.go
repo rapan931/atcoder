@@ -19,6 +19,48 @@ func init() {
 }
 
 func main() {
+	H, W, N := sI3()
+	A := make([]int, N)
+	B := make([]int, N)
+	C := make([]int, N)
+	D := make([]int, N)
+
+	for i := 0; i < N; i++ {
+		A[i], B[i], C[i], D[i] = sI4()
+	}
+
+	G := make([][]int, H+2)
+	sums := make([][]int, H+2)
+	for i := 0; i < H+2; i++ {
+		G[i] = make([]int, W+2)
+		sums[i] = make([]int, W+2)
+	}
+
+	for i := 0; i < N; i++ {
+		G[A[i]][B[i]] += 1
+		G[A[i]][D[i]+1] -= 1
+		G[C[i]+1][B[i]] -= 1
+		G[C[i]+1][D[i]+1] += 1
+	}
+
+	// 横方向
+	for i := 1; i < H+1; i++ {
+		for ii := 1; ii < W+1; ii++ {
+			G[i][ii] += G[i][ii-1]
+		}
+	}
+
+	// 縦方向
+	for i := 1; i < W+1; i++ {
+		for ii := 1; ii < H+1; ii++ {
+			G[ii][i] += G[ii-1][i]
+		}
+	}
+
+	for i := 1; i < H+1; i++ {
+		printSliceSepSpace(G[i][1 : W+1])
+	}
+
 }
 
 func max(a int, b int) int {
@@ -226,9 +268,7 @@ const (
 	SegmentTreeTypeMax
 )
 
-func newSegmentTree(data []int, t SegmentTreeType) *SegmentTree {
-	n := len(data)
-
+func newSegmentTree(n int, data []int, t SegmentTreeType) *SegmentTree {
 	segTree := new(SegmentTree)
 	segTree.n = 1
 	for segTree.n < n {
@@ -307,7 +347,7 @@ func (segTree *SegmentTree) Query(begin, end int) int {
 // +-+-+---+-+-+-+-+
 // |7|8|9|A|B|C|D|E|
 // +-+-+-+-+-+-+-+-+
-func (segTree *SegmentTree) update(idx, x int) {
+func (segTree *SegmentTree) Update(idx, x int) {
 	idx += segTree.n - 1
 	segTree.data[idx] = x
 	for 0 < idx {
@@ -321,12 +361,6 @@ func (segTree *SegmentTree) update(idx, x int) {
 		case SegmentTreeTypeMax:
 			segTree.data[idx] = max(segTree.data[idx*2+1], segTree.data[idx*2+2])
 		}
-	}
-}
-
-func (segTree *SegmentTree) Build(arr []int) {
-	for i, v := range arr {
-		segTree.update(i, v)
 	}
 }
 

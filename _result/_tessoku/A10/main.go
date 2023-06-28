@@ -18,7 +18,25 @@ func init() {
 	sc.Split(bufio.ScanWords)
 }
 
+// A10
 func main() {
+	N := sI()
+	A := sIs(N)
+	D := sI()
+
+	L := make([]int, D)
+	R := make([]int, D)
+
+	for i := 0; i < D; i++ {
+		L[i] = sI()
+		R[i] = sI()
+	}
+
+	tree := newSegmentTree(A, SegmentTreeTypeMax)
+	tree.Build(A)
+	for i := 0; i < D; i++ {
+		fmt.Println(max(tree.Query(0, L[i]-1), tree.Query(R[i], len(A))))
+	}
 }
 
 func max(a int, b int) int {
