@@ -293,6 +293,7 @@ func (segTree *SegmentTree) query(begin, end, idx, a, b int) int {
 	}
 }
 
+// [begin, end)
 func (segTree *SegmentTree) Query(begin, end int) int {
 	return segTree.query(begin, end, 0, 0, segTree.n)
 }
