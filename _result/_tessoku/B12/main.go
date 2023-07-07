@@ -20,6 +20,22 @@ func init() {
 }
 
 func main() {
+	N := sF()
+	L, R := 0.0, 100.0
+
+	for L < R {
+		M := (L + R) / 2.0
+
+		result := M * M * M + M
+		if math.Abs(result - N) < 0.001 {
+			fmt.Println(M)
+			return
+		} else if  result < N {
+			L = M
+		} else {
+			R = M
+		}
+	}
 }
 
 func max(a int, b int) int {

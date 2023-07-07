@@ -20,6 +20,17 @@ func init() {
 }
 
 func main() {
+	N, K := sI2()
+	A := sIs(N)
+
+	sum := 0
+	for i := 0; i < N; i++ {
+		a := A[i]
+		index, _ := upperBound(A, a + K)
+		sum += (index - i - 1)
+	}
+
+	fmt.Println(sum)
 }
 
 func max(a int, b int) int {
@@ -27,6 +38,9 @@ func max(a int, b int) int {
 		return b
 	}
 	return a
+}
+func pow(x, y int) int {
+	return int(math.Pow(float64(x), float64(y)))
 }
 
 func min(a int, b int) int {
@@ -185,12 +199,6 @@ func factorialNum(n int) int {
 	return ret
 }
 
-// x ** y
-func pow(x, y int) int {
-	return int(math.Pow(float64(x), float64(y)))
-}
-
-// x ** y
 func powInt64(x, y uint64) uint64 {
 	return uint64(math.Pow(float64(x), float64(y)))
 }
