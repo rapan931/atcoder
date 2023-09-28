@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"math"
 	"os"
@@ -20,6 +21,25 @@ func init() {
 }
 
 func main() {
+	N := sB()
+	N2 := make([]byte, len(N))
+	copy(N2, N)
+
+	N2 = unique(N2)
+
+	if !bytes.Equal(N, N2) {
+		fmt.Println("No")
+		return
+	}
+
+	sort.Slice(N2, func(i, j int) bool { return N2[i] > N2[j] })
+
+	if !bytes.Equal(N, N2) {
+		fmt.Println("No")
+		return
+	}
+
+	fmt.Println("Yes")
 }
 
 func unique(ary []byte) []byte {
